@@ -4,10 +4,26 @@ plugins {
     id 'org.javamodularity.moduleplugin' version '1.8.12'
     id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'org.beryx.jlink' version '2.25.0'
+    id 'com.diffplug.spotless' version '6.25.0'
+
 }
 
 group 'com.example'
 version '1.0-SNAPSHOT'
+
+compileJava.dependsOn 'spotlessApply'
+
+
+spotless {
+    java {
+        target 'src/main/java/**/*.java', 'src/test/java/**/*.java'
+        targetExclude 'build/**'
+        importOrder()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        toggleOffOn()
+    }
+}
 
 repositories {
     mavenCentral()
